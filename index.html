@@ -1,100 +1,313 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b0d12">
-<meta name="robots" content="noindex,nofollow">
-<title>Porney — Adult Video Directory</title>
-<style>
-:root{color-scheme:dark;--bg:#0b0d12;--panel:#141821;--panel2:#1b202b;--text:#f4f5f7;--muted:#9ba3b2;--line:#262c38;--accent:#ff5470}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.top{max-width:1200px;margin:auto;padding:15px 18px;display:flex;align-items:center;gap:16px}.brand{font-size:23px;font-weight:900;letter-spacing:-1px;color:white;text-decoration:none;white-space:nowrap}.brand span{color:var(--accent)}.search{flex:1;min-width:100px;max-width:500px;margin-left:auto}.search input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:white;font:inherit;outline:none}.search input:focus{border-color:var(--accent)}
-main{max-width:1200px;margin:auto;padding:20px 18px 48px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0 14px}.section-head h1,.section-head h2{font-size:20px;line-height:1.2;margin:0;letter-spacing:-.4px}.count{color:var(--muted);font-size:12px}
-.video-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.video-card,.category-card{display:block;min-width:0;color:inherit;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;transition:transform .16s ease,border-color .16s ease}.video-card:hover,.category-card:hover{transform:translateY(-2px);border-color:#535d70}.thumb{position:relative;aspect-ratio:16/9;background:#202633;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover;display:block}.thumb-fallback{width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#272b38,#11141c 60%,#3b1e2a);color:#ffb1bf;font-weight:800;font-size:30px;letter-spacing:-1px}.video-title{padding:10px 11px 12px;font-weight:650;font-size:14px;line-height:1.3;min-height:54px}.category-wrap{margin-top:30px}.category-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.category-card .thumb{aspect-ratio:4/3}.category-card .video-title{min-height:0;padding:9px 10px}.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}.pill{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:7px 12px;font:inherit;font-size:12px;cursor:pointer}.pill.active{background:#2b1720;color:#ffb7c4;border-color:#8e3348}.empty{display:none;color:var(--muted);padding:28px;text-align:center;border:1px dashed var(--line);border-radius:12px;margin-top:10px}footer{border-top:1px solid var(--line);padding:18px;color:var(--muted);font-size:12px;text-align:center}.note{margin-top:20px;color:var(--muted);font-size:12px}
-@media(max-width:900px){.video-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.category-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:600px){.top{padding:12px}.brand{font-size:21px}.search input{padding:10px 11px}main{padding:15px 12px 35px}.video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.video-title{font-size:13px;padding:8px;min-height:48px}.category-card .video-title{padding:8px}.section-head h1,.section-head h2{font-size:18px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0c10">
+  <meta name="description" content="Browse an independent directory of adult video links by thumbnail and category.">
+  <meta name="robots" content="index,follow">
+  <title>Porney — Adult Video Directory</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0c10;
+      --surface: #13151d;
+      --surface-2: #191c26;
+      --line: #292d3a;
+      --text: #f5f5f7;
+      --muted: #a5a8b5;
+      --accent: #ff6b8a;
+      --accent-soft: #321b26;
+      --radius: 15px;
+      --content: 1240px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.45;
+    }
+    a { color: inherit; }
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(11,12,16,.94); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      width: min(100%, var(--content)); margin: auto; padding: 14px 20px;
+      display: flex; align-items: center; gap: 22px;
+    }
+    .brand {
+      flex: 0 0 auto; text-decoration: none; font-size: 26px; line-height: 1;
+      font-weight: 950; letter-spacing: -1.4px;
+    }
+    .brand-dot { color: var(--accent); }
+    .search-wrap { flex: 1; max-width: 660px; margin-left: auto; position: relative; }
+    .search-icon {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; color: var(--muted); pointer-events: none;
+    }
+    #site-search {
+      width: 100%; border: 1px solid #393d4b; border-radius: 13px;
+      background: var(--surface); color: var(--text); font: inherit;
+      padding: 13px 15px 13px 44px; outline: none;
+    }
+    #site-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,107,138,.12); }
+    main { width: min(100%, var(--content)); margin: auto; padding: 24px 20px 42px; }
+    .section { margin: 0; }
+    .section + .section { margin-top: 34px; }
+    .section-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; margin-bottom: 15px;
+    }
+    h1, h2 { font-size: 21px; line-height: 1.2; margin: 0; letter-spacing: -.45px; }
+    .result-count { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .video-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
+    }
+    .category-grid {
+      display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 13px;
+    }
+    .media-card {
+      display: block; min-width: 0; overflow: hidden; text-decoration: none;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--surface); transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .media-card:hover { transform: translateY(-3px); border-color: #555a6b; box-shadow: 0 8px 24px rgba(0,0,0,.22); }
+    .media-card:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .thumb {
+      aspect-ratio: 16 / 9; width: 100%; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #252938, #10121a);
+    }
+    .category-card .thumb { aspect-ratio: 4 / 3; }
+    .thumb img {
+      display: block; width: 100%; height: 100%; object-fit: cover;
+      transition: transform .25s ease;
+    }
+    .media-card:hover .thumb img { transform: scale(1.035); }
+    .card-label {
+      padding: 11px 12px 12px; font-size: 14px; font-weight: 720; line-height: 1.3;
+      min-height: 47px; overflow-wrap: anywhere;
+    }
+    .category-card .card-label { min-height: 0; padding: 10px 11px 11px; }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 15px; }
+    .filter {
+      border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+      border-radius: 999px; padding: 7px 11px; cursor: pointer; font: inherit;
+      font-size: 12px; line-height: 1.1;
+    }
+    .filter:hover { color: var(--text); border-color: #555a6b; }
+    .filter[aria-pressed="true"] { background: var(--accent-soft); color: #ffc0ce; border-color: #98435a; }
+    .empty-state {
+      display: none; padding: 25px 16px; border: 1px dashed var(--line);
+      border-radius: 12px; color: var(--muted); text-align: center; font-size: 14px;
+    }
+    .notice {
+      margin: 30px 0 0; border-top: 1px solid var(--line); padding-top: 16px;
+      color: var(--muted); font-size: 12px;
+    }
+    footer {
+      border-top: 1px solid var(--line); padding: 19px 20px max(19px, env(safe-area-inset-bottom));
+      text-align: center; color: var(--muted); font-size: 12px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    @media (max-width: 980px) {
+      .video-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .category-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .header-inner { padding: 12px; gap: 13px; }
+      .brand { font-size: 23px; }
+      #site-search { padding: 11px 12px 11px 37px; font-size: 14px; }
+      .search-icon { left: 12px; width: 16px; height: 16px; }
+      main { padding: 19px 12px 32px; }
+      .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+      .section + .section { margin-top: 29px; }
+      .section-head { margin-bottom: 12px; }
+      h1, h2 { font-size: 19px; }
+      .card-label { padding: 9px 9px 10px; font-size: 13px; min-height: 43px; }
+      .category-card .card-label { padding: 8px 9px 9px; }
+      .filter-row { gap: 6px; }
+      .filter { padding: 7px 9px; }
+    }
+    @media (max-width: 360px) {
+      .header-inner { gap: 9px; }
+      .brand { font-size: 21px; }
+      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
 </head>
 <body>
-<header><div class="top">
-<a class="brand" href="#" aria-label="Porney home">porney<span>.</span></a>
-<div class="search"><input id="search" type="search" placeholder="Search videos or categories…" aria-label="Search videos or categories"></div>
-</div></header>
-<main>
-<section aria-labelledby="videos-heading">
-<div class="section-head"><h1 id="videos-heading">Videos</h1><span class="count" id="video-count"></span></div>
-<div class="video-grid" id="videos"></div>
-<div class="empty" id="video-empty">No matching videos.</div>
-</section>
-<section class="category-wrap" aria-labelledby="categories-heading">
-<div class="section-head"><h2 id="categories-heading">Categories</h2><span class="count" id="category-count"></span></div>
-<div class="pill-row" id="filters"><button class="pill active" data-filter="all">All</button><button class="pill" data-filter="A">A–F</button><button class="pill" data-filter="G">G–M</button><button class="pill" data-filter="N">N–S</button><button class="pill" data-filter="T">T–Z</button></div>
-<div class="category-grid" id="categories"></div>
-<div class="empty" id="category-empty">No matching categories.</div>
-</section>
-<p class="note">External links open on their original websites. Only access adult content if you are 18 or older and it is legal where you live.</p>
-</main>
-<footer>Porney · Independent link directory · External websites are not owned or operated by this site.</footer>
-<script>
-const videos = [
- {title:"Indian",url:"https://xhamster46.desi/videos/indian-stepmom-very-hard-fucking-doggy-style-viral-hindi-sex-video-xhstHAM",image:"",tag:"INDIAN"},
- {title:"Teacher",url:"https://xhamster46.desi/videos/teacher-and-student-were-caught-in-the-middle-of-fucking-xhbSJIo?t=0&utm_source=ext_shared&utm_medium=referral&utm_campaign=link",image:"",tag:"TEACHER"},
- {title:"Creampie",url:"https://www.xnxxvideos.me/video-18jdwhbd/pie4k._hot_creampie_scene_in_pussy_-_veronica_leal",image:"",tag:"VIDEO"},
- {title:"Video",url:"https://www.xnxxvideos.me/video-1ai5m72b/_",image:"",tag:"VIDEO"},
- {title:"Solo",url:"https://www.videoxx.com/video.olhpvcef0de/barely_legal_18_yeras_old_girl_plaing_with_her_young_bald_pussy_to_orgasm",image:"",tag:"SOLO"},
- {title:"Video",url:"https://www.videoxx.com/video.kkvikvb0e91/kauanphanex",image:"",tag:"VIDEO"},
- {title:"Ebony",url:"https://www.pussyboy.net/video/823176/this-ebony-18yo-cutie-said-i-was-insensitive-i-turned-it-around-and-got-her-to-suck-my-bwc/",image:"",tag:"EBONY"},
- {title:"Hindi",url:"https://www.fullhindibfvideos.com/tel-lagaake-jawan-ladke-nai-choda-dost-ki-gaand/",image:"",tag:"HINDI"}
-];
-const categories = [
- {title:"Anal",url:"https://www.videoxx.com/c/Anal-12",tag:"ANAL"},
- {title:"Blowjob",url:"https://www.videoxx.com/c/Blowjob-15",tag:"BLOWJOB"},
- {title:"Cheating",url:"https://www.xnxxvideos.me/search/cheating?top",tag:"CHEATING"},
- {title:"Couple",url:"https://xxx18hot.com/couple/",tag:"COUPLE"},
- {title:"Cute",url:"https://www.xnxxvideos.me/search/cute?top",tag:"CUTE"},
- {title:"Doctor",url:"https://www.xnxxvideos.me/search/doctor?top",tag:"DOCTOR"},
- {title:"Doggystyle",url:"https://www.xnxxvideos.me/search/doggystyle?top",tag:"DOGGY"},
- {title:"Gay",url:"https://www.fullhindibfvideos.com/category/gay/",tag:"GAY"},
- {title:"Indian",url:"https://www.xnxxvideos.me/search/indian",tag:"INDIAN"},
- {title:"Lesbian",url:"https://xhamster46.desi/categories/lesbian",tag:"LESBIAN"},
- {title:"Maid",url:"https://www.xnxxvideos.me/search/maid?top",tag:"MAID"},
- {title:"Kamwali",url:"https://www.fullhindibfvideos.com/category/kamwali/",tag:"KAMWALI"},
- {title:"Mom",url:"https://xhamster46.desi/categories/mom",tag:"MOM"},
- {title:"Masturbation",url:"https://www.xnxxvideos.me/search/masturbation?top",tag:"SOLO"},
- {title:"Teacher",url:"https://xhamster46.desi/tags/teachers",tag:"TEACHER"},
- {title:"Threesome",url:"https://www.xnxxvideos.me/search/threesome",tag:"THREESOME"},
- {title:"Wife",url:"https://xxx18hot.com/wife/",tag:"WIFE"}
-].sort((a,b)=>a.title.localeCompare(b.title));
-const $ = s => document.querySelector(s);
-function makeCard(item,kind){
- const a=document.createElement("a"); a.className=kind==="video"?"video-card":"category-card";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";a.setAttribute("aria-label",item.title);
- const thumb=document.createElement("div");thumb.className="thumb";
- if(item.image){const img=document.createElement("img");img.src=item.image;img.alt="";img.loading="lazy";img.referrerPolicy="no-referrer";img.onerror=()=>{thumb.innerHTML="";const f=document.createElement("div");f.className="thumb-fallback";f.textContent=item.tag||item.title.toUpperCase();thumb.appendChild(f)};thumb.appendChild(img)}
- else {const f=document.createElement("div");f.className="thumb-fallback";f.textContent=item.tag||item.title.toUpperCase();thumb.appendChild(f)}
- const title=document.createElement("div");title.className="video-title";title.textContent=item.title;a.append(thumb,title);return a;
-}
-let activeFilter="all";
-function render(){
- const q=$("#search").value.trim().toLowerCase();
- const shownVideos=videos.filter(v=>v.title.toLowerCase().includes(q));
- $("#videos").replaceChildren(...shownVideos.map(v=>makeCard(v,"video")));
- $("#video-count").textContent=shownVideos.length+" links";
- $("#video-empty").style.display=shownVideos.length?"none":"block";
- const shownCats=categories.filter(c=>{
-  const matches=c.title.toLowerCase().includes(q);
-  const first=c.title[0].toUpperCase();
-  const bucket=activeFilter==="all" || (activeFilter==="A" && first>="A"&&first<="F") || (activeFilter==="G"&&first>="G"&&first<="M") || (activeFilter==="N"&&first>="N"&&first<="S") || (activeFilter==="T"&&first>="T"&&first<="Z");
-  return matches&&bucket;
- });
- $("#categories").replaceChildren(...shownCats.map(c=>makeCard(c,"category")));
- $("#category-count").textContent=shownCats.length+" categories";
- $("#category-empty").style.display=shownCats.length?"none":"block";
-}
-$("#search").addEventListener("input",render);
-$("#filters").addEventListener("click",e=>{const b=e.target.closest("button[data-filter]");if(!b)return;activeFilter=b.dataset.filter;document.querySelectorAll(".pill").forEach(x=>x.classList.toggle("active",x===b));render()});
-render();
-</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#" aria-label="Porney home">porney<span class="brand-dot">.</span></a>
+      <label class="search-wrap">
+        <span class="sr-only">Search videos and categories</span>
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="2"/>
+          <path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input id="site-search" type="search" placeholder="Search videos or categories…" autocomplete="off" spellcheck="false">
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" aria-labelledby="videos-heading">
+      <div class="section-head">
+        <h1 id="videos-heading">Videos</h1>
+        <span class="result-count" id="video-count" aria-live="polite">8 videos</span>
+      </div>
+      <div class="video-grid" id="video-grid"></div>
+      <div class="empty-state" id="video-empty">No matching videos. Try another search.</div>
+    </section>
+
+    <section class="section" aria-labelledby="categories-heading">
+      <div class="section-head">
+        <h2 id="categories-heading">Categories</h2>
+        <span class="result-count" id="category-count" aria-live="polite">17 categories</span>
+      </div>
+      <div class="filter-row" id="category-filters" aria-label="Filter categories by first letter">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">All A–Z</button>
+        <button class="filter" type="button" data-filter="A-F" aria-pressed="false">A–F</button>
+        <button class="filter" type="button" data-filter="G-M" aria-pressed="false">G–M</button>
+        <button class="filter" type="button" data-filter="N-S" aria-pressed="false">N–S</button>
+        <button class="filter" type="button" data-filter="T-Z" aria-pressed="false">T–Z</button>
+      </div>
+      <div class="category-grid" id="category-grid"></div>
+      <div class="empty-state" id="category-empty">No matching categories. Try another search or filter.</div>
+    </section>
+
+    <p class="notice">External links open on their original websites. This directory is for adults aged 18 and over; only access content that is lawful where you live. External websites and their content are not owned or operated by Porney.</p>
+  </main>
+
+  <footer>Porney · Independent link directory</footer>
+
+  <script>
+    "use strict";
+
+    // Local image paths are relative to this index.html file.
+    const videos = [
+      { title: "Indian",   image: "images/videos/indian.jpg",   url: "https://xhamster46.desi/videos/indian-stepmom-very-hard-fucking-doggy-style-viral-hindi-sex-video-xhstHAM" },
+      { title: "Teacher",  image: "images/videos/teacher.jpg",  url: "https://xhamster46.desi/videos/teacher-and-student-were-caught-in-the-middle-of-fucking-xhbSJIo?t=0&utm_source=ext_shared&utm_medium=referral&utm_campaign=link" },
+      { title: "Creampie", image: "images/videos/creampie.jpg", url: "https://www.xnxxvideos.me/video-18jdwhbd/pie4k._hot_creampie_scene_in_pussy_-_veronica_leal" },
+      { title: "Mom",      image: "images/videos/mom.jpg",      url: "https://www.xnxxvideos.me/video-1ai5m72b/_" },
+      { title: "Solo",     image: "images/videos/solo.jpg",     url: "https://www.videoxx.com/video.olhpvcef0de/barely_legal_18_yeras_old_girl_plaing_with_her_young_bald_pussy_to_orgasm" },
+      { title: "Gay",      image: "images/videos/gay.jpg",      url: "https://www.videoxx.com/video.kkvikvb0e91/kauanphanex" },
+      { title: "Ebony",    image: "images/videos/ebony.jpg",    url: "https://www.pussyboy.net/video/823176/this-ebony-18yo-cutie-said-i-was-insensitive-i-turned-it-around-and-got-her-to-suck-my-bwc/" },
+      { title: "Gay2",     image: "images/videos/gay2.jpg",     url: "https://www.fullhindibfvideos.com/tel-lagaake-jawan-ladke-nai-choda-dost-ki-gaand/" }
+    ];
+
+    // Category entries are kept in alphabetical order.
+    const categories = [
+      { title: "Anal",         image: "images/categories/anal.jpg",         url: "https://www.videoxx.com/c/Anal-12" },
+      { title: "Blowjob",      image: "images/categories/blowjob.jpg",      url: "https://www.videoxx.com/c/Blowjob-15" },
+      { title: "Cheating",     image: "images/categories/cheating.jpg",     url: "https://www.xnxxvideos.me/search/cheating?top" },
+      { title: "Couple",       image: "images/categories/couple.jpg",       url: "https://xxx18hot.com/couple/" },
+      { title: "Cute",         image: "images/categories/cute.jpg",         url: "https://www.xnxxvideos.me/search/cute?top" },
+      { title: "Doctor",       image: "images/categories/doctor.jpg",       url: "https://www.xnxxvideos.me/search/doctor?top" },
+      { title: "Doggystyle",   image: "images/categories/doggystyle.jpg",   url: "https://www.xnxxvideos.me/search/doggystyle?top" },
+      { title: "Gay",          image: "images/categories/gay.jpg",          url: "https://www.fullhindibfvideos.com/category/gay/" },
+      { title: "Indian",       image: "images/categories/indian.jpg",       url: "https://www.xnxxvideos.me/search/indian" },
+      { title: "Kamwali",      image: "images/categories/kamwali.jpg",      url: "https://www.fullhindibfvideos.com/category/kamwali/" },
+      { title: "Lesbian",      image: "images/categories/lesbian.jpg",      url: "https://xhamster46.desi/categories/lesbian" },
+      { title: "Maid",         image: "images/categories/maid.jpg",         url: "https://www.xnxxvideos.me/search/maid?top" },
+      { title: "Masturbation", image: "images/categories/masturbation.jpg", url: "https://www.xnxxvideos.me/search/masturbation?top" },
+      { title: "Mom",          image: "images/categories/mom.jpg",          url: "https://xhamster46.desi/categories/mom" },
+      { title: "Teacher",      image: "images/categories/teacher.jpg",      url: "https://xhamster46.desi/tags/teachers" },
+      { title: "Threesome",    image: "images/categories/threesome.jpg",    url: "https://www.xnxxvideos.me/search/threesome" },
+      { title: "Wife",         image: "images/categories/wife.jpg",         url: "https://xxx18hot.com/wife/" }
+    ];
+
+    const videoGrid = document.getElementById("video-grid");
+    const categoryGrid = document.getElementById("category-grid");
+    const searchInput = document.getElementById("site-search");
+    const videoCount = document.getElementById("video-count");
+    const categoryCount = document.getElementById("category-count");
+    const videoEmpty = document.getElementById("video-empty");
+    const categoryEmpty = document.getElementById("category-empty");
+    let activeFilter = "all";
+
+    function createCard(item, kind) {
+      const link = document.createElement("a");
+      link.className = "media-card " + (kind === "category" ? "category-card" : "video-card");
+      link.href = item.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", item.title + " — opens external website");
+
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = item.title + " thumbnail";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.addEventListener("error", () => {
+        // If an image is missing, show a clear fallback instead of a broken-image icon.
+        thumb.replaceChildren();
+        const fallback = document.createElement("div");
+        fallback.style.cssText = "height:100%;display:grid;place-items:center;color:#ffc0ce;font-weight:800;background:linear-gradient(135deg,#252938,#10121a);";
+        fallback.textContent = item.title;
+        thumb.appendChild(fallback);
+      }, { once: true });
+      thumb.appendChild(img);
+
+      const label = document.createElement("div");
+      label.className = "card-label";
+      label.textContent = item.title;
+
+      link.append(thumb, label);
+      return link;
+    }
+
+    function inLetterRange(title, filter) {
+      if (filter === "all") return true;
+      const first = title.trim().charAt(0).toUpperCase();
+      if (filter === "A-F") return first >= "A" && first <= "F";
+      if (filter === "G-M") return first >= "G" && first <= "M";
+      if (filter === "N-S") return first >= "N" && first <= "S";
+      if (filter === "T-Z") return first >= "T" && first <= "Z";
+      return true;
+    }
+
+    function render() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+
+      const matchingVideos = videos.filter(item => item.title.toLocaleLowerCase().includes(query));
+      videoGrid.replaceChildren(...matchingVideos.map(item => createCard(item, "video")));
+      videoCount.textContent = matchingVideos.length + (matchingVideos.length === 1 ? " video" : " videos");
+      videoEmpty.style.display = matchingVideos.length ? "none" : "block";
+
+      const matchingCategories = categories.filter(item =>
+        item.title.toLocaleLowerCase().includes(query) && inLetterRange(item.title, activeFilter)
+      );
+      categoryGrid.replaceChildren(...matchingCategories.map(item => createCard(item, "category")));
+      categoryCount.textContent = matchingCategories.length + (matchingCategories.length === 1 ? " category" : " categories");
+      categoryEmpty.style.display = matchingCategories.length ? "none" : "block";
+    }
+
+    searchInput.addEventListener("input", render);
+    document.getElementById("category-filters").addEventListener("click", event => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      activeFilter = button.dataset.filter;
+      document.querySelectorAll(".filter").forEach(item => {
+        item.setAttribute("aria-pressed", String(item === button));
+      });
+      render();
+    });
+
+    render();
+  </script>
 </body>
 </html>
